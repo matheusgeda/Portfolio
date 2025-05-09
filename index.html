@@ -493,7 +493,7 @@
 
     .timeline {
       position: relative;
-      max-width: 1000px;
+      max-width: 1500px;
       margin: auto;
       padding: 40px 0;
     }
@@ -712,7 +712,7 @@
 
     /* MODAL CONTENT */
     .modal-content {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 60px auto;
       background: #fff;
       padding: 30px;
@@ -720,6 +720,7 @@
       position: relative;
       color: #1e293b;
       animation: slideUp 0.4s ease;
+      text-align: center;
     }
 
     .modal-content h2 {
@@ -739,6 +740,9 @@
       object-fit: cover;
       border-radius: 12px;
       margin-bottom: 24px;
+    }
+    .modal-iframe {
+      height: 600px;
     }
 
     /* BUTTON */
@@ -791,6 +795,30 @@
         transform: translateY(0);
       }
     }
+    .report-page {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .report-page h3 {
+      font-size: 1.1rem;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .report-page p {
+      font-size: 0.95rem;
+      color: #374151;
+      margin-bottom: 12px;
+    }
+
+    .report-img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
 
 
 
@@ -804,7 +832,9 @@
 
   <div class="sidebar" id="sidebar">
     <div>
-      <h2 onclick="scrollToTop()">Matheus Gêda</h2>
+      <div onclick="scrollToTop()" style="cursor: pointer;">
+      <img src="img/logo.png" alt="Matheus Gêda Logo" style="max-width: 140px;">
+    </div>
       <ul>
         <li><a href="#about">ABOUT ME</a></li>
         <li><a href="#skills">SKILLS</a></li>
@@ -1001,10 +1031,10 @@
           <!-- Project 1 -->
           <div class="project-card" onclick="openModal('project1')">
             <div class="project-thumb">
-              <img src="img/project1.png" alt="Predicting Customer Behavior">
+              <img src="img/project1.png" alt="Premier League Through the Seasons">
               <div class="overlay-text">
                 <span class="overlay-badge">Power BI Dashboard</span>
-                <span class="overlay-title">Predicting Customer Behavior</span>
+                <span class="overlay-title">Premier League Through the Seasons</span>
               </div>              
             </div>
           </div>
@@ -1041,12 +1071,67 @@
     <div class="project-modal" id="project1">
       <div class="modal-content">
         <span class="close-button" onclick="closeModal('project1')">&times;</span>
-        <h2>Predicting Customer Behavior</h2>
-        <p>Dashboard using clustering techniques to segment clients based on behavior and demographics. Built with Power BI and Python.</p>
-        <img src="img/project1-full.jpg" alt="Client Segmentation Full" class="modal-img">
-        <a href="https://app.powerbi.com/view?r=EXAMPLE1" target="_blank" class="view-button">View on Power BI</a>
+        <h2>Premier League Through the Seasons</h2>
+
+        <p>
+          This interactive dashboard offers a historical overview of the English Premier League, with data spanning across multiple seasons.
+          Users can explore team performance, match results, and key game statistics over time.
+        </p>
+
+        <p>
+          Designed to support performance analysis and historical comparison, this dashboard provides valuable insights into trends and patterns that define the Premier League's legacy.
+        </p>
+
+        <!-- Power BI embed -->
+        <iframe
+          title="Premier League Analysis"
+          width="100%"
+          height="500"
+          src="https://app.powerbi.com/view?r=eyJrIjoiNWFjZDkwMGYtZTBhZS00ZTMwLTk2NTgtMTI0YmQ3YTIxYzE5IiwidCI6IjNjZGJmNDI2LWU0M2MtNGNmNy1hMDdkLTAyZDcxYzcxNDI0YSJ9"
+          frameborder="0"
+          allowfullscreen="true"
+          class="modal-iframe"
+        ></iframe>
+        <br><br>
+        <a
+          href="https://app.powerbi.com/view?r=eyJrIjoiNWFjZDkwMGYtZTBhZS00ZTMwLTk2NTgtMTI0YmQ3YTIxYzE5IiwidCI6IjNjZGJmNDI2LWU0M2MtNGNmNy1hMDdkLTAyZDcxYzcxNDI0YSJ9"
+          target="_blank"
+          class="view-button"
+        >
+          Open in Power BI
+        </a>
+
+        <!-- Page 1 -->
+        <div class="report-page">
+          <h3>1. Home Page</h3>
+          <!--<p>A season-by-season breakdown of matches, goals, and home win percentages.</p>-->
+          <img src="img/project1-page1.png" alt="Home Page" class="report-img">
+        </div>
+
+        <!-- Page 2 -->
+        <div class="report-page">
+          <h3>2. Season Overview</h3>
+          <p>A season-by-season breakdown of matches, goals, and home win percentages.</p>
+          <img src="img/project1-page2.png" alt="Season Overview Page" class="report-img">
+        </div>
+
+        <!-- Page 3 -->
+        <div class="report-page">
+          <h3>3. Team Statistics</h3>
+          <p>Detailed team-level metrics such as total wins, draws, losses, and points.</p>
+          <img src="img/project1-page3.png" alt="Team Statistics Page" class="report-img">
+        </div>
+
+        <!-- Page 4 -->
+        <div class="report-page">
+          <h3>4. League Metrics</h3>
+          <p>Aggregated statistics on attendance, shots, goals, cards, and referee activity.</p>
+          <img src="img/project1-page4.png" alt="League Metrics Page" class="report-img">
+        </div>
       </div>
     </div>
+
+
     
     <div class="project-modal" id="project2">
       <div class="modal-content">
