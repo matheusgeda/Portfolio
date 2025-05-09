@@ -377,7 +377,13 @@
       font-size: 1rem;
       color: #fff;
       margin-bottom: 8px;
+      height: 2.5em; /* altura mínima para alinhar todas */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
+
 
     .experience-count {
       font-size: 2.5rem;
@@ -1134,7 +1140,7 @@
         let count = 0;
   
         const updateCount = () => {
-          const increment = target / 40;
+          const increment = target / 100;
           if (count < target) {
             count += increment;
             counter.innerText = Math.ceil(count);
