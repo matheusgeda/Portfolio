@@ -110,6 +110,7 @@
       scroll-behavior: smooth;
     }
 
+
     section {
       margin-bottom: 80px;
       padding: 30px;
@@ -516,7 +517,8 @@
     }
 
     .timeline-item.left {
-      left: 0;
+      left: 50%;
+      transform: translateX(-100%); /* desloca totalmente para a esquerda da linha central */
     }
 
     .timeline-item.right {
@@ -554,10 +556,17 @@
       border-radius: 12px;
       position: relative;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      margin-left: 0;
+      width: 100%; /* ou outro valor coerente */
     }
 
+    .timeline-item.left .content {
+      margin-right: 20px; /* novo: afasta da linha central */
+    }
 
-
+    .timeline-item.right .content {
+      margin-left: 20px; /* opcional: mantém simetria */
+    }
 
 
     /* RESPONSIVO PARA MOBILE */
@@ -576,12 +585,10 @@
       .timeline-item.left {
         left: 0;
       }
-
-      /* Ajuste da posição da bolinha para dispositivos móveis */
       .timeline-item.left::after,
       .timeline-item.right::after {
-        left: 0; /* Ajusta a bolinha para o centro da linha */
-        right: auto; /* Remove o posicionamento 'right' para alinhar no centro */
+        left: 0; 
+        right: auto; 
       }
     }
 
@@ -1092,7 +1099,7 @@
           allowfullscreen="true"
           class="modal-iframe"
         ></iframe>
-        <br><br>
+        <br><br><br>
         <a
           href="https://app.powerbi.com/view?r=eyJrIjoiNWFjZDkwMGYtZTBhZS00ZTMwLTk2NTgtMTI0YmQ3YTIxYzE5IiwidCI6IjNjZGJmNDI2LWU0M2MtNGNmNy1hMDdkLTAyZDcxYzcxNDI0YSJ9"
           target="_blank"
