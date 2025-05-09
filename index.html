@@ -7,6 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
+  <link rel="icon" href="img/favicondark.png" media="(prefers-color-scheme: light)" type="image/png">
+
+  <link rel="icon" href="img/faviconlight.png" media="(prefers-color-scheme: dark)" type="image/png">
+
   <style>
     * {
       margin: 0;
@@ -1049,15 +1053,15 @@
           <!-- Project 2 -->
           <div class="project-card" onclick="openModal('project2')">
             <div class="project-thumb">
-              <img src="img/project2.png" alt="ETL Dashboard">
+              <img src="img/project2.png" alt="Understanding Ireland">
               <div class="overlay-text">
                 <span class="overlay-badge">Power BI Dashboard</span>
-                <span class="overlay-title">ETL Monitoring</span>
+                <span class="overlay-title">Understanding Ireland</span>
               </div>
             </div>
           </div>
     
-          <!-- Project 3 -->
+          <!-- Project 3 --><!---
           <div class="project-card" onclick="openModal('project3')">
             <div class="project-thumb">
               <img src="img/project3.png" alt="Recommendation Dashboard">
@@ -1066,7 +1070,7 @@
                 <span class="overlay-title">Service Recommendation</span>
               </div>
             </div>
-          </div>
+          </div>-->
     
         </div>
       </div>
@@ -1143,20 +1147,38 @@
     <div class="project-modal" id="project2">
       <div class="modal-content">
         <span class="close-button" onclick="closeModal('project2')">&times;</span>
-        <h2>ETL Pipeline</h2>
-        <p>End-to-end data pipeline using Apache HOP, DBT, and SQL to transform raw data into analytics-ready layers.</p>
-        <img src="img/project2-full.jpg" alt="ETL Pipeline Full" class="modal-img">
-        <a href="https://github.com/seuusuario/etl-pipeline" target="_blank" class="view-button">View on GitHub</a>
-      </div>
-    </div>
-    
-    <div class="project-modal" id="project3">
-      <div class="modal-content">
-        <span class="close-button" onclick="closeModal('project3')">&times;</span>
-        <h2>Recommendation System</h2>
-        <p>AI system built with Python and scikit-learn to suggest services based on usage history and client segments.</p>
-        <img src="img/project3-full.jpg" alt="Recommendation Full" class="modal-img">
-        <a href="https://github.com/seuusuario/recommendation" target="_blank" class="view-button">View on GitHub</a>
+        <h2>Understanding Ireland</h2>
+
+        <p> This interactive dashboard provides a snapshot of Ireland’s key economic and demographic indicators for 2022, including GDP per capita
+          , population size, population density, and overall GDP. </p> 
+
+        <p> Designed to support economic and demographic analysis, this dashboard offers valuable insights 
+          into the country's population and economic performance, helping users understand Ireland's position on both fronts. </p>
+
+        <!-- Power BI embed -->
+        <iframe title="Understanding Ireland" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNmRjODQ3ZjUtNTk5ZC00OTk0LWEzOWEtNzVkYzgxNzNhZDEzIiwidCI6IjNjZGJmNDI2LWU0M2MtNGNmNy1hMDdkLTAyZDcxYzcxNDI0YSJ9" frameborder="0" allowFullScreen="true"></iframe>
+        <br><br><br>
+        <a
+          href="https://app.powerbi.com/view?r=eyJrIjoiNmRjODQ3ZjUtNTk5ZC00OTk0LWEzOWEtNzVkYzgxNzNhZDEzIiwidCI6IjNjZGJmNDI2LWU0M2MtNGNmNy1hMDdkLTAyZDcxYzcxNDI0YSJ9"
+          target="_blank"
+          class="view-button"
+        >
+          Open in Power BI
+        </a>
+
+        <!-- Page 1 -->
+        <div class="report-page">
+          <h3>1. Home Page</h3>
+          <!--<p>A season-by-season breakdown of matches, goals, and home win percentages.</p>-->
+          <img src="img/project2-page1.png" alt="Home Page" class="report-img">
+        </div>
+
+        <!-- Page 2 -->
+        <div class="report-page">
+          <h3>2. Infographic</h3>
+          <p>This infographic page provides a clear and easy-to-understand overview of Ireland’s key economic and demographic data, with simple visuals for quick insights.</p>
+          <img src="img/project2-page2.png" alt="Infographic" class="report-img">
+        </div>
       </div>
     </div>
     
