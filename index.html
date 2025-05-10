@@ -569,32 +569,46 @@
     }
 
     .timeline-item.right .content {
-      margin-left: 20px; /* opcional: mantém simetria */
+      margin-left: 20px;
     }
 
 
     /* RESPONSIVO PARA MOBILE */
     @media screen and (max-width: 768px) {
       .timeline::after {
-        left: 8px; /* Ajusta a linha da timeline */
+        left: 20px;
+        transform: none !important;
       }
 
-      .timeline-item {
-        width: 100%;
-        padding-left: 30px;
-        padding-right: 20px;
+      .timeline-item,
+      .timeline-item.left,
+      .timeline-item.right {
+        width: 100% !important;
+        position: relative !important;
+        left: 0 !important;
+        transform: none !important;
+        padding-left: 40px !important;
+        padding-right: 20px !important;
       }
 
-      .timeline-item.right,
-      .timeline-item.left {
-        left: 0;
-      }
+      .timeline-item::after,
       .timeline-item.left::after,
       .timeline-item.right::after {
-        left: 0; 
-        right: auto; 
+        left: 12px !important;
+        right: auto !important;
+      }
+
+      .timeline-item .content,
+      .timeline-item.left .content,
+      .timeline-item.right .content {
+        margin: 0 !important;
       }
     }
+
+
+
+
+
 
 
     .portfolio-grid {
