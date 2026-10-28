@@ -14,39 +14,39 @@ An independent analytics engineering case study for a fictional subscription ser
 
 Run the generator from this directory:
 
-\`python generate_data.py --customers 8420 --seed 20261028 --output data/customer_month.csv\`
+`python generate_data.py --customers 8420 --seed 20261028 --output data/customer_month.csv`
 
-The generator produces a synthetic customer-month CSV spanning 18 months from January 2024 through June 2025. It writes one row from signup through the end of the demo window, including inactive periods after a churn event. IDs use the \`SYN-\` prefix. No real customer data is used.
+The generator produces a synthetic customer-month CSV spanning 18 months from January 2024 through June 2025. It writes one row from signup through the end of the demo window, including inactive periods after a churn event. IDs use the `SYN-` prefix. No real customer data is used.
 
 Fields:
 
 | Field | Meaning |
 | --- | --- |
-| \`snapshot_month\` | First day of the month being observed |
-| \`customer_id\` | Synthetic identifier |
-| \`cohort_month\` | Signup month |
-| \`plan_name\`, \`region\`, \`acquisition_channel\`, \`segment\` | Synthetic customer attributes |
-| \`tenure_months\` | Completed months since signup |
-| \`active_at_start\` | Active at the start of the month (0/1) |
-| \`churn_event\` | Qualifying synthetic cancellation during the month (0/1) |
-| \`active_at_end\` | Active after the monthly event (0/1) |
-| \`monthly_recurring_revenue\` | Synthetic list price while active at month start |
-| \`usage_index\` | Generated activity index from 0 to 100 |
-| \`support_contacts\` | Generated monthly support-contact count |
-| \`churn_risk_score\` | Transparent rule-based score from the generated monthly churn probability, scaled to 0–100 |
+| `snapshot_month` | First day of the month being observed |
+| `customer_id` | Synthetic identifier |
+| `cohort_month` | Signup month |
+| `plan_name`, `region`, `acquisition_channel`, `segment` | Synthetic customer attributes |
+| `tenure_months` | Completed months since signup |
+| `active_at_start` | Active at the start of the month (0/1) |
+| `churn_event` | Qualifying synthetic cancellation during the month (0/1) |
+| `active_at_end` | Active after the monthly event (0/1) |
+| `monthly_recurring_revenue` | Synthetic list price while active at month start |
+| `usage_index` | Generated activity index from 0 to 100 |
+| `support_contacts` | Generated monthly support-contact count |
+| `churn_risk_score` | Transparent rule-based score from the generated monthly churn probability, scaled to 0–100 |
 
 The generator includes early-tenure, low-usage, support-contact and segment-level signals so the analytical examples have patterns to inspect. This is a deterministic scenario generator, not a trained predictive model.
 
 ## Run the SQL model
 
-Requires PostgreSQL and \`psql\`. From this folder:
+Requires PostgreSQL and `psql`. From this folder:
 
-\`\`\`sh
+```sh
 python generate_data.py
 psql "$DATABASE_URL" -f schema.sql
 psql "$DATABASE_URL" -f load_and_model.sql
 psql "$DATABASE_URL" -f analysis.sql
-\`\`\`
+```
 
 The schema defines a CSV-aligned staging table, customer/plan/month dimensions and a customer-month fact table. The load script copies the generated CSV, upserts dimensions and builds the fact table. Analysis queries use the fact and dimensions.
 
@@ -67,7 +67,7 @@ The segment labels and churn mechanism are designed for demonstration. A product
 
 ## Files
 
-- \`generate_data.py\` — deterministic synthetic CSV generator
-- \`schema.sql\` — PostgreSQL staging and dimensional model
-- \`load_and_model.sql\` — CSV load and idempotent model build
-- \`analysis.sql\` — churn, cohort, exposure and data-quality queries
+- `generate_data.py` — deterministic synthetic CSV generator
+- `schema.sql` — PostgreSQL staging and dimensional model
+- `load_and_model.sql` — CSV load and idempotent model build
+- `analysis.sql` — churn, cohort, exposure and data-quality queries
