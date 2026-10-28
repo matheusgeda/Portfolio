@@ -1,6 +1,6 @@
 \set ON_ERROR_STOP on
 -- Run from this folder using psql. The generator writes the CSV to data/customer_month.csv.
-TRUNCATE TABLE retention_demo.stg_customer_month;\copy retention_demo.stg_customer_month FROM 'data/customer_month.csv' WITH (FORMAT csv, HEADER true)
+TRUNCATE TABLE retention_demo.stg_customer_month;\n\\copy retention_demo.stg_customer_month FROM 'data/customer_month.csv' WITH (FORMAT csv, HEADER true)
 
 INSERT INTO retention_demo.dim_customer (customer_id, cohort_month, region, acquisition_channel, segment)
 SELECT DISTINCT customer_id, cohort_month, region, acquisition_channel, segment
