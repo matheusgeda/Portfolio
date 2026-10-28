@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142321">
+<meta name="description" content="An independent customer-retention analytics case study built with synthetic data. Explore churn, cohort retention, revenue exposure, and a Power BI-style dashboard.">
+<title>Customer Retention Intelligence | Matheus Ferreira Gêda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#142321;--ink2:#1d302d;--panel:#203532;--paper:#f2f4ed;--white:#fffefa;--muted:#75827b;--line:#dce2d9;--green:#c6f47a;--teal:#75d2ba;--coral:#f29a7f;--blue:#9bb7f2;--mono:"DM Mono",monospace;--sans:"DM Sans",Arial,sans-serif;--display:Manrope,var(--sans);--max:1160px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit}button,select{font:inherit}.wrap{width:min(100% - 48px,var(--max));margin:auto}.mono,.eyebrow,.section-number,.data-note,.kpi-label,.chart-kicker,.axis-label,.tag,.step-index,.table-note,.legend,.date{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase}.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff23;color:#fff}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.02em}.brand-mark{width:34px;height:34px;border:1px solid #ffffff60;display:grid;place-items:center;color:var(--green);font:11px var(--mono)}.top-link{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#c5d0c9}.top-link:hover{color:var(--green)}
+.hero{background:var(--ink);color:#fff;padding:0 0 60px}.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:42px;align-items:center;padding:70px 0 55px}.eyebrow{color:var(--teal);display:flex;gap:10px;align-items:center}.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px #c6f47a22}.hero h1{font:700 clamp(43px,6.2vw,75px)/.99 var(--display);letter-spacing:-.07em;margin:22px 0 21px;max-width:720px}.hero h1 em{font:500 1em Georgia,serif;color:var(--green);letter-spacing:-.06em}.hero-copy>p{max-width:590px;color:#c3cfca;font-size:16px;line-height:1.75;margin:0}.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:27px}.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border:1px solid #ffffff55;text-decoration:none;font-size:12px;font-weight:700;transition:transform .2s,background .2s}.button:hover{transform:translateY(-2px)}.button.primary{background:var(--green);border-color:var(--green);color:var(--ink)}.hero-art{min-height:318px;border:1px solid #ffffff20;background:radial-gradient(circle at 78% 22%,#477267 0,#28443d 28%,#1b302d 70%);padding:24px;position:relative;overflow:hidden}.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #ffffff20;border-radius:50%;width:310px;height:310px;right:-87px;top:-73px}.hero-art:after{width:220px;height:220px;right:-42px;top:-28px;border-color:#c6f47a55}.art-label{position:relative;z-index:1;color:#c6f47a}.art-title{position:relative;z-index:1;font:600 29px/1.1 var(--display);letter-spacing:-.055em;margin-top:12px;max-width:290px}.hero-art svg{position:absolute;inset:82px 16px 10px;width:calc(100% - 32px);height:calc(100% - 92px)}.data-note{display:inline-flex;gap:9px;align-items:center;margin-top:22px;padding:9px 11px;border:1px solid #ffffff40;color:#d8e5dd;letter-spacing:.045em;font-size:9px}.data-note b{color:var(--green);font-weight:500}
+.proof-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #ffffff28;padding-top:23px}.proof{padding:0 21px;border-left:1px solid #ffffff22}.proof:first-child{padding-left:0;border:0}.proof strong{display:block;font:600 27px/1.1 var(--display);letter-spacing:-.045em;color:var(--green)}.proof span{display:block;color:#b5c3bc;font-size:11px;margin-top:7px}
+.section{padding:92px 0}.section-heading{display:grid;grid-template-columns:.8fr 1.2fr;gap:35px;align-items:end;margin-bottom:31px}.section-number{color:var(--teal)}.section-heading h2{font:600 clamp(30px,4vw,48px)/1.04 var(--display);letter-spacing:-.06em;margin:10px 0 0}.section-heading>p{max-width:560px;color:var(--muted);font-size:14px;margin:0 0 3px}
+.dashboard{background:var(--ink);color:#f5f7f0;padding:26px;border-radius:3px;box-shadow:0 22px 55px #17252218}.dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;padding-bottom:22px;border-bottom:1px solid #ffffff20}.dash-title h3{font:600 21px var(--display);letter-spacing:-.035em;margin:3px 0 4px}.dash-title p{margin:0;color:#aab8b1;font-size:11px}.filters{display:flex;gap:9px;align-items:center}.filter{background:#1f3430;color:#f4f7f0;border:1px solid #53635b;border-radius:2px;padding:9px 12px;font:10px var(--mono);letter-spacing:.02em}.filter:focus{outline:2px solid var(--green);outline-offset:2px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;padding:20px 0}.kpi{border:1px solid #ffffff20;background:#1a2c29;padding:15px 16px;min-height:91px}.kpi-label{color:#aab8b1;font-size:9px;letter-spacing:.065em}.kpi-value{font:600 27px/1.1 var(--display);letter-spacing:-.045em;margin-top:9px}.kpi-change{font:9px var(--mono);color:var(--green);margin-top:6px}.kpi:nth-child(2) .kpi-value{color:var(--coral)}.charts{display:grid;grid-template-columns:1.42fr .78fr;gap:12px}.chart-panel{background:#1a2c29;border:1px solid #ffffff20;padding:17px 18px 14px;min-width:0}.chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}.chart-head h4{font:600 13px var(--display);margin:0}.chart-head p{font-size:10px;color:#9baaa2;margin:4px 0 0}.chart-kicker{font-size:8px;color:#a8b9b0}.chart-svg{width:100%;height:auto;display:block;overflow:visible}.chart-svg text{font-family:var(--mono);font-size:9px;fill:#93a39a}.gridline{stroke:#ffffff14;stroke-width:1}.axis{stroke:#ffffff35;stroke-width:1}.series-line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.series-dot{stroke:#1a2c29;stroke-width:2}.legend-list{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}.legend{display:flex;align-items:center;gap:6px;color:#b9c5be;font-size:8px;letter-spacing:.02em}.legend i{width:7px;height:7px;border-radius:50%}.bar-list{display:grid;gap:14px;padding:12px 0 7px}.bar-row{display:grid;grid-template-columns:76px 1fr 54px;gap:10px;align-items:center}.bar-name{font:9px var(--mono);color:#c0ccc5}.bar-track{height:8px;background:#ffffff16;position:relative}.bar-fill{height:100%;min-width:2px;background:var(--teal)}.bar-val{text-align:right;font:9px var(--mono);color:#ecf3ec}.bar-insight{border-top:1px solid #ffffff1c;margin-top:13px;padding-top:13px;font-size:10px;color:#aab8b1;line-height:1.6}.bar-insight strong{color:var(--green);font-weight:600}.legend-all{color:#9baaa2;font-size:9px}
+.dashboard-foot{margin-top:13px;color:#8e9c95;font:9px var(--mono);letter-spacing:.035em;display:flex;justify-content:space-between;gap:12px}
+.cohort-wrap{overflow:auto}.cohort{width:100%;border-collapse:collapse;font-size:11px;min-width:520px}.cohort th{font:9px var(--mono);letter-spacing:.05em;color:#99a9a0;text-align:left;padding:9px 10px;border-bottom:1px solid #ffffff25;text-transform:uppercase}.cohort td{padding:8px 10px;border-bottom:1px solid #ffffff13}.cohort td:first-child{font-weight:600}.heat{display:inline-grid;place-items:center;min-width:40px;padding:5px 6px;font:9px var(--mono);color:#12211e;border-radius:2px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info-card{background:var(--white);border:1px solid var(--line);padding:25px}.info-card .section-number{font-size:9px}.info-card h3{font:600 20px/1.2 var(--display);letter-spacing:-.04em;margin:11px 0 10px}.info-card p{margin:0;color:#61716a;font-size:13px;line-height:1.75}.info-card ul{padding:0;margin:17px 0 0;list-style:none}.info-card li{border-top:1px solid var(--line);padding:10px 0;color:#53645c;font-size:12px}.info-card li strong{color:var(--ink)}
+.model{margin-top:18px;background:#e6ebe1;border-left:2px solid #478578;padding:22px 24px}.model-title{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#267a70}.schema{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:13px}.table-card{padding:12px;background:#fbfcf8;border:1px solid #d3ddd3;min-width:0}.table-card strong{display:block;font:11px var(--mono);color:#234740}.table-card span{display:block;color:#6a7a72;font-size:10px;line-height:1.55;margin-top:7px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}.step{background:var(--white);border:1px solid var(--line);padding:19px 17px;min-height:180px;position:relative}.step:before{content:"";position:absolute;left:0;top:0;width:32px;height:2px;background:var(--teal)}.step-index{color:#43877b}.step h3{font:600 15px var(--display);letter-spacing:-.025em;margin:18px 0 8px}.step p{color:#63736b;font-size:11px;line-height:1.65;margin:0}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.insight{padding:21px;background:var(--ink);color:#fff;min-height:166px;position:relative;overflow:hidden}.insight .mono{color:var(--green)}.insight h3{font:600 16px/1.25 var(--display);letter-spacing:-.03em;margin:16px 0 8px;max-width:280px}.insight p{font-size:11px;color:#bdc8c1;line-height:1.65;margin:0}.insight-foot{margin-top:14px;color:#a7b8ad;font:9px var(--mono)}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:var(--white);border:1px solid var(--line);padding:17px}.metric strong{font:600 14px var(--display);display:block}.metric span{font-size:11px;color:#697971;display:block;margin-top:7px;line-height:1.6}
+.disclaimer{margin-top:18px;padding:18px 20px;background:#e8eee4;border:1px solid #d6dfd4;color:#5f6e64;font-size:11px;line-height:1.7}.disclaimer strong{color:var(--ink)}
+.cta{background:var(--ink);color:#fff;padding:52px 0}.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:25px}.cta h2{font:600 clamp(27px,4vw,42px)/1.05 var(--display);letter-spacing:-.055em;margin:8px 0}.cta p{margin:0;color:#bdc8c1;font-size:12px}.footer{padding:18px 0;color:#819089;font:9px var(--mono)}.footer-inner{display:flex;justify-content:space-between;gap:15px}
+@media(max-width:950px){.hero-grid{grid-template-columns:1fr .8fr;gap:25px}.steps{grid-template-columns:repeat(3,1fr)}.charts{grid-template-columns:1fr}.bar-list{grid-template-columns:1fr 1fr;column-gap:26px}.metric-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.wrap{width:min(100% - 32px,var(--max))}.topbar{height:64px}.brand{font-size:10px}.top-link{font-size:8px}.hero-grid{grid-template-columns:1fr;padding:45px 0 34px;gap:22px}.hero h1{font-size:49px}.hero-copy>p{font-size:14px}.hero-art{min-height:240px}.proof-row{grid-template-columns:1fr 1fr;row-gap:18px}.proof{padding:0 12px}.proof:nth-child(odd){padding-left:0;border:0}.proof strong{font-size:23px}.section{padding:66px 0}.section-heading{grid-template-columns:1fr;gap:14px;margin-bottom:23px}.section-heading>p{font-size:13px}.dashboard{padding:15px}.dash-head{display:block}.filters{margin-top:16px}.filter{flex:1;min-width:0}.kpis{grid-template-columns:1fr 1fr;gap:8px;padding:14px 0}.kpi{padding:12px;min-height:84px}.kpi-value{font-size:23px}.charts{gap:8px}.chart-panel{padding:13px 11px}.chart-head h4{font-size:12px}.bar-list{grid-template-columns:1fr;gap:11px}.dashboard-foot{display:block;line-height:1.7}.dashboard-foot span{display:block}.twocol{grid-template-columns:1fr}.schema{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.step{min-height:160px;padding:16px 14px}.insights{grid-template-columns:1fr}.insight{min-height:0}.metric-grid{grid-template-columns:1fr 1fr}.cta-inner{display:block}.cta .button{margin-top:19px}.footer-inner{flex-direction:column}}
+@media(max-width:390px){.hero h1{font-size:43px}.steps,.metric-grid{grid-template-columns:1fr}.filters{gap:6px}.filter{padding:8px 7px;font-size:9px}.proof span{font-size:10px}.art-title{font-size:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="hero">
+<header class="wrap topbar">
+<a class="brand" href="../" aria-label="Return to Matheus Gêda portfolio"><span class="brand-mark">MG</span><span>MATHEUS FERREIRA GÊDA</span></a>
+<a class="top-link" href="../#work">← Back to portfolio</a>
+</header>
+<div class="wrap hero-grid">
+<div class="hero-copy">
+<div class="eyebrow"><span class="dot" aria-hidden="true"></span>Independent analytics case study · synthetic data</div>
+<h1>Retention is a system you can <em>measure.</em></h1>
+<p>A product analytics case study that turns subscription activity into a practical retention workflow: define the metric, model the customer lifecycle, surface risk, and give teams a clear next action.</p>
+<div class="hero-actions"><a class="button primary" href="#explorer">Explore the dashboard <span aria-hidden="true">↓</span></a><a class="button" href="#approach">Read the approach <span aria-hidden="true">↘</span></a></div>
+<div class="data-note"><b>DEMO PROJECT</b><span>All customer records, figures and patterns are synthetic and illustrative.</span></div>
+</div>
+<div class="hero-art" aria-label="Illustrative retention analytics visual">
+<div class="art-label mono">CUSTOMER LIFECYCLE / 01—12</div><div class="art-title">From early signals<br>to timely action.</div>
+<svg viewBox="0 0 500 230" role="img" aria-label="Illustrative rising customer retention curve">
+<g stroke="#ffffff24" stroke-width="1"><path d="M24 44H470M24 90H470M24 136H470M24 182H470"/></g>
+<path d="M25 172C76 157 91 160 128 133S186 115 221 123 285 75 322 88 379 65 408 71 448 42 470 46L470 205H25Z" fill="#c6f47a1d"/>
+<path d="M25 172C76 157 91 160 128 133S186 115 221 123 285 75 322 88 379 65 408 71 448 42 470 46" fill="none" stroke="#c6f47a" stroke-width="3" stroke-linecap="round"/>
+<g fill="#c6f47a" stroke="#1d302d" stroke-width="4"><circle cx="25" cy="172" r="6"/><circle cx="128" cy="133" r="6"/><circle cx="221" cy="123" r="6"/><circle cx="322" cy="88" r="6"/><circle cx="408" cy="71" r="6"/><circle cx="470" cy="46" r="6"/></g>
+<g fill="#d6e2db" font-family="monospace" font-size="10"><text x="23" y="220">SIGNAL</text><text x="189" y="220">SEGMENT</text><text x="385" y="220">ACTION</text></g>
+</svg>
+</div>
+</div>
+<div class="wrap proof-row">
+<div class="proof"><strong>8,420</strong><span>synthetic customer accounts</span></div>
+<div class="proof"><strong>18 months</strong><span>simulated subscription history</span></div>
+<div class="proof"><strong>4 segments</strong><span>lifecycle and risk groups</span></div>
+<div class="proof"><strong>1 decision loop</strong><span>measure · explain · act</span></div>
+</div>
+</section>
+<main>
+<section class="section wrap" id="explorer">
+<div class="section-heading"><div><div class="section-number">01 — INTERACTIVE REPORT</div><h2>A retention view built<br>for the next decision.</h2></div><p>Explore the generated demo scenario by customer segment and time window. KPIs and charts update together so the relationship between customer health, churn and revenue exposure stays visible.</p></div>
+<div class="dashboard" aria-label="Interactive synthetic customer retention dashboard">
+<div class="dash-head"><div class="dash-title"><div class="eyebrow">SUBSCRIPTION HEALTH / DEMO</div><h3>Retention Intelligence</h3><p>Illustrative scenario · generated data · no real customer records</p></div>
+<div class="filters"><label class="mono" for="segment-filter" style="color:#acbab2;font-size:9px">SEGMENT</label><select class="filter" id="segment-filter" aria-label="Filter by customer segment"><option value="all">All customers</option><option value="Core">Core</option><option value="Growth">Growth</option><option value="At risk">At risk</option><option value="Premium">Premium</option></select><label class="mono" for="range-filter" style="color:#acbab2;font-size:9px">WINDOW</label><select class="filter" id="range-filter" aria-label="Filter dashboard time window"><option value="12">12 months</option><option value="6">6 months</option></select></div>
+</div>
+<div class="kpis" aria-live="polite">
+<div class="kpi"><div class="kpi-label">Active accounts</div><div class="kpi-value" id="kpi-active">—</div><div class="kpi-change">CURRENT DEMO MONTH</div></div>
+<div class="kpi"><div class="kpi-label">Monthly churn</div><div class="kpi-value" id="kpi-churn">—</div><div class="kpi-change">CHURNED / ACTIVE</div></div>
+<div class="kpi"><div class="kpi-label">6-month retention</div><div class="kpi-value" id="kpi-retention">—</div><div class="kpi-change">MODELED FROM DEMO RATE</div></div>
+<div class="kpi"><div class="kpi-label">MRR at risk</div><div class="kpi-value" id="kpi-risk">—</div><div class="kpi-change">ILLUSTRATIVE EXPOSURE</div></div>
+</div>
+<div class="charts">
+<div class="chart-panel"><div class="chart-head"><div><h4>Monthly churn rate</h4><p>Weighted rate across the selected customer group</p></div><span class="chart-kicker">MONTHLY · %</span></div><svg id="churn-chart" class="chart-svg" viewBox="0 0 720 240" role="img" aria-label="Monthly churn rate line chart"></svg><div class="legend-list" id="churn-legend"></div></div>
+<div class="chart-panel"><div class="chart-head"><div><h4>Revenue exposure</h4><p>Estimated monthly recurring revenue in the demo risk pool</p></div><span class="chart-kicker">USD · MRR</span></div><div class="bar-list" id="exposure-bars"></div><div class="bar-insight" id="exposure-note"></div></div>
+</div>
+<div class="dashboard-foot"><span>Generated scenario for portfolio demonstration</span><span>Use filters to explore segment-level behavior</span></div>
+</div>
+</section>
+<section class="section wrap" id="problem">
+<div class="section-heading"><div><div class="section-number">02 — BUSINESS QUESTION</div><h2>Who may leave,<br>and where should a team look first?</h2></div><p>In a subscription business, a single churn number hides useful detail. The analytical task is to separate lifecycle effects, compare customer groups consistently, and translate a risk signal into a focused investigation.</p></div>
+<div class="twocol">
+<article class="info-card"><div class="section-number">THE SCENARIO</div><h3>A fictional subscription service</h3><p>This self-initiated portfolio case uses a generated dataset representing monthly customer activity, subscription plans, billing and support signals. It is designed to demonstrate the analytical workflow, not to represent a real company or a production model.</p><ul><li><strong>Population:</strong> 8,420 generated accounts across four segments</li><li><strong>Time span:</strong> 18 simulated months; dashboard view focuses on the latest 12</li><li><strong>Business goal:</strong> make retention performance explainable and actionable</li></ul></article>
+<article class="info-card"><div class="section-number">DECISION TO SUPPORT</div><h3>Move from monitoring to a useful next step</h3><p>A useful report should help a retention or customer-success team answer three questions without overstating what the model knows:</p><ul><li><strong>Where is churn changing?</strong> Separate overall movement from segment-level behavior.</li><li><strong>Which customers deserve a closer look?</strong> Compare lifecycle, plan and recent engagement signals.</li><li><strong>What should happen next?</strong> Use a transparent queue for human review and measure follow-up outcomes.</li></ul></article>
+</div>
+</section>
+<section class="section wrap" id="approach">
+<div class="section-heading"><div><div class="section-number">03 — ANALYTICAL APPROACH</div><h2>Five deliberate steps,<br>one connected workflow.</h2></div><p>Each step keeps business definitions, data quality and decision use connected. The project is intentionally small enough to explain in an interview and broad enough to show the full analytics lifecycle.</p></div>
+<div class="steps">
+<article class="step"><div class="step-index">STEP 01 / FRAME</div><h3>Define the outcome</h3><p>Agree on the churn event, observation window and unit of analysis. Separate customer loss from temporary inactivity and document the reporting grain.</p></article>
+<article class="step"><div class="step-index">STEP 02 / PREPARE</div><h3>Build a trustworthy base</h3><p>Use Python to profile and validate synthetic records, standardize dates and categories, check duplicate keys and test the monthly customer snapshot.</p></article>
+<article class="step"><div class="step-index">STEP 03 / MODEL</div><h3>Shape the analytical model</h3><p>Use SQL to create reusable customer-month facts and conformed plan, date, segment and region dimensions. Keep definitions consistent across reports.</p></article>
+<article class="step"><div class="step-index">STEP 04 / ANALYZE</div><h3>Explain patterns</h3><p>Compare monthly churn, cohort retention and MRR exposure by tenure and segment. Treat associations as investigation clues, not proof of causation.</p></article>
+<article class="step"><div class="step-index">STEP 05 / ACT</div><h3>Design the decision loop</h3><p>Prioritize a human-reviewed customer-success queue, record intervention eligibility, then monitor contact, save and later retention outcomes.</p></article>
+</div>
+<div class="model"><div class="model-title">Proposed dimensional model · analytics-ready layer</div><div class="schema">
+<div class="table-card"><strong>fact_customer_month</strong><span>customer_key · month_key · plan_key<br>active_flag · churn_flag · mrr<br>usage_index · support_contacts</span></div>
+<div class="table-card"><strong>dim_customer</strong><span>customer_key · signup_date<br>region · acquisition_channel<br>synthetic_segment</span></div>
+<div class="table-card"><strong>dim_plan</strong><span>plan_key · plan_name<br>billing_frequency · list_price<br>currency_code</span></div>
+<div class="table-card"><strong>dim_date</strong><span>date_key · month · quarter<br>calendar_year · cohort_month<br>tenure_month</span></div>
+</div></div>
+</section>
+<section class="section wrap" id="findings">
+<div class="section-heading"><div><div class="section-number">04 — DEMONSTRATION READOUT</div><h2>Patterns to investigate,<br>not claims to overstate.</h2></div><p>The demo generator intentionally creates different churn profiles by segment and tenure so the report can demonstrate analysis and prioritization. These are properties of the synthetic scenario only.</p></div>
+<div class="insights">
+<article class="insight"><div class="mono">01 / LIFECYCLE</div><h3>Early tenure merits its own retention view.</h3><p>Generated demo cohorts show a steeper early-life drop than established customers, making onboarding cohorts useful to inspect separately.</p><div class="insight-foot">ILLUSTRATIVE SYNTHETIC PATTERN</div></article>
+<article class="insight"><div class="mono">02 / SEGMENT</div><h3>An average can conceal concentrated exposure.</h3><p>The scenario assigns a higher churn rate to the at-risk segment. A weighted portfolio view and a segment view tell different stories.</p><div class="insight-foot">ILLUSTRATIVE SYNTHETIC PATTERN</div></article>
+<article class="insight"><div class="mono">03 / ACTION</div><h3>Risk scores need a review loop.</h3><p>A score is a prioritization aid, not an automatic decision. Track eligibility, outreach and outcomes before claiming retention impact.</p><div class="insight-foot">RECOMMENDED OPERATING PRACTICE</div></article>
+</div>
+</section>
+<section class="section wrap" id="metrics">
+<div class="section-heading"><div><div class="section-number">05 — METRIC DEFINITIONS</div><h2>Shared definitions<br>before shared dashboards.</h2></div><p>Clear metric contracts prevent teams from comparing different denominators under the same label. Definitions below are project assumptions for the synthetic demo.</p></div>
+<div class="metric-grid">
+<div class="metric"><strong>Monthly customer churn</strong><span>Customers with a qualifying cancellation during the month ÷ customers active at the start of that month.</span></div>
+<div class="metric"><strong>Logo retention</strong><span>Eligible starting customers still active at period end ÷ eligible customers at period start.</span></div>
+<div class="metric"><strong>Cohort retention</strong><span>Customers from a shared start-month cohort who remain active after N full months.</span></div>
+<div class="metric"><strong>MRR at risk</strong><span>Current recurring revenue associated with accounts above a review threshold; an exposure estimate, not guaranteed loss.</span></div>
+</div>
+<div class="disclaimer"><strong>Transparency note:</strong> This is an independent portfolio demonstration. Customer records, segment labels, figures, trends and insights are synthetic and generated for this page. No client, employer, production deployment, model validation, revenue saved or business result is claimed. The dashboard illustrates a reporting concept and analytical workflow.</div>
+</section>
+<section class="cta"><div class="wrap cta-inner"><div><div class="eyebrow">BUILT TO BE DISCUSSED</div><h2>Good analytics starts<br>with a clear question.</h2><p>Independent case study · SQL · Python · Power BI · synthetic data</p></div><a class="button primary" href="mailto:mf.geda@gmail.com?subject=Customer%20Retention%20case%20study">Discuss this case <span aria-hidden="true">↗</span></a></div></section>
+</main>
+<footer class="wrap footer"><div class="footer-inner"><span>© 2026 MATHEUS FERREIRA GÊDA · INDEPENDENT DEMO PROJECT</span><a href="../#work">Back to selected work ↑</a></div></footer>
+<script>
+(function(){
+'use strict';
+const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const data=[
+{id:'Core',color:'#c6f47a',price:45,risk:.06,active:[3420,3440,3470,3490,3510,3520,3540,3555,3570,3580,3590,3600],churn:[2.2,2.1,2.1,2.0,2.2,2.1,2.3,2.2,2.3,2.2,2.1,2.0]},
+{id:'Growth',color:'#75d2ba',price:75,risk:.12,active:[2320,2340,2370,2390,2400,2420,2440,2460,2480,2490,2500,2520],churn:[3.1,3.0,3.2,3.0,3.1,3.3,3.2,3.4,3.3,3.1,3.2,3.2]},
+{id:'At risk',color:'#f29a7f',price:98,risk:.33,active:[1480,1490,1510,1515,1530,1540,1550,1555,1560,1570,1570,1580],churn:[8.6,8.4,8.7,8.2,8.4,8.1,8.2,8.5,8.2,8.1,8.3,8.0]},
+{id:'Premium',color:'#9bb7f2',price:180,risk:.05,active:[690,692,695,697,700,702,705,708,710,715,718,720],churn:[1.4,1.3,1.3,1.2,1.3,1.2,1.4,1.3,1.2,1.3,1.2,1.2]}
+];
+const segment=document.getElementById('segment-filter');
+const range=document.getElementById('range-filter');
+const $=id=>document.getElementById(id);
+const money=n=>'$'+Math.round(n/1000)+'K';
+const group=()=>segment.value==='all'?data:data.filter(d=>d.id===segment.value);
+function drawLine(){
+const selected=group();
+const count=Number(range.value);
+const offset=12-count;
+const W=720,H=240,L=45,R=12,T=15,B=32;
+const vals=selected.flatMap(d=>d.churn.slice(offset));
+const min=Math.max(0,Math.floor((Math.min(...vals)-1)/2)*2);
+const max=Math.ceil((Math.max(...vals)+1)/2)*2;
+const X=i=>L+i*(W-L-R)/(count-1);
+const Y=v=>T+(max-v)*(H-T-B)/(max-min||1);
+let out='';
+for(let v=min;v<=max;v+=2){out+='<line class="gridline" x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/><text x="4" y="'+(Y(v)+3)+'">'+v.toFixed(0)+'%</text>'}
+out+='<line class="axis" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>';
+const ticks=count===6?[0,1,2,3,4,5]:[0,2,4,6,8,10,11];
+ticks.forEach(i=>{if(i<count)out+='<text x="'+X(i)+'" y="'+(H-8)+'" text-anchor="middle">'+months[offset+i]+'</text>'});
+selected.forEach(d=>{
+const vals=d.churn.slice(offset);
+const path=vals.map((v,i)=>(i?'L':'M')+X(i)+' '+Y(v)).join(' ');
+out+='<path class="series-line" d="'+path+'" stroke="'+d.color+'"/>';
+vals.forEach((v,i)=>{out+='<circle class="series-dot" cx="'+X(i)+'" cy="'+Y(v)+'" r="3.5" fill="'+d.color+'"><title>'+d.id+' · '+months[offset+i]+' · '+v.toFixed(1)+'%</title></circle>'});
+});
+$('churn-chart').innerHTML=out;
+$('churn-legend').innerHTML=selected.map(d=>'<span class="legend"><i style="background:'+d.color+'"></i>'+d.id+'</span>').join('')+'<span class="legend-all">synthetic rates</span>';
+}
+function update(){
+const selected=group();
+const current=selected.reduce((s,d)=>s+d.active[11],0);
+const churned=selected.reduce((s,d)=>s+d.active[11]*d.churn[11]/100,0);
+const rate=churned/current*100;
+const retained=Math.pow(1-rate/100,6)*100;
+const exposure=selected.reduce((s,d)=>s+d.active[11]*d.risk*d.price,0);
+$('kpi-active').textContent=current.toLocaleString('en-US');
+$('kpi-churn').textContent=rate.toFixed(1)+'%';
+$('kpi-retention').textContent=retained.toFixed(1)+'%';
+$('kpi-risk').textContent=money(exposure);
+const max=selected.reduce((m,d)=>Math.max(m,d.active[11]*d.risk*d.price),0);
+$('exposure-bars').innerHTML=selected.map(d=>{
+const amount=d.active[11]*d.risk*d.price;
+return '<div class="bar-row"><span class="bar-name">'+d.id+'</span><div class="bar-track"><div class="bar-fill" style="width:'+Math.max(2,amount/max*100)+'%;background:'+d.color+'"></div></div><span class="bar-val">'+money(amount)+'</span></div>';
+}).join('');
+const top=selected.slice().sort((a,b)=>(b.active[11]*b.risk*b.price)-(a.active[11]*a.risk*a.price))[0];
+$('exposure-note').innerHTML='Largest illustrative exposure: <strong>'+top.id+'</strong>. MRR at risk is a prioritization estimate, not a forecast of realized churn.';
+drawLine();
+}
+segment.addEventListener('change',update);
+range.addEventListener('change',drawLine);
+update();
+})();
+</script>
+</body>
+</html>
