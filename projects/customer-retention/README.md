@@ -59,7 +59,7 @@ The schema defines a CSV-aligned staging table, customer/plan/month dimensions a
 
 ## Dashboard note
 
-The portfolio page contains a compact deterministic aggregate scenario so it can load instantly without a database or build step. The row-level generator is a separate reproducible artifact in the same project; both are synthetic and their individual sample values are not presented as real-world findings.
+The portfolio page contains a compact deterministic aggregate scenario so it can load instantly without a database or build step. Its cohort heatmap is derived transparently from the displayed monthly churn assumptions, rather than from a separate observed cohort history. The row-level generator is a separate reproducible artifact in the same project; both are synthetic and their individual sample values are not presented as real-world findings.
 
 ## Limitations and responsible use
 

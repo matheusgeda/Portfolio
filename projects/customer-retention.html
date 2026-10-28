@@ -80,6 +80,7 @@
 <div class="chart-panel"><div class="chart-head"><div><h4>Monthly churn rate</h4><p>Weighted rate across the selected customer group</p></div><span class="chart-kicker">MONTHLY · %</span></div><svg id="churn-chart" class="chart-svg" viewBox="0 0 720 240" role="img" aria-label="Monthly churn rate line chart"></svg><div class="legend-list" id="churn-legend"></div></div>
 <div class="chart-panel"><div class="chart-head"><div><h4>Revenue exposure</h4><p>Estimated monthly recurring revenue in the demo risk pool</p></div><span class="chart-kicker">USD · MRR</span></div><div class="bar-list" id="exposure-bars"></div><div class="bar-insight" id="exposure-note"></div></div>
 </div>
+<div class="chart-panel" style="margin-top:12px"><div class="chart-head"><div><h4>Retention by signup cohort</h4><p>Illustrative curve derived from this demo’s monthly churn rates, not an observed customer history</p></div><span class="chart-kicker">COHORT · MONTH</span></div><div id="cohort-grid" class="cohort-wrap" aria-live="polite"></div></div>
 <div class="dashboard-foot"><span>Generated scenario for portfolio demonstration</span><span>Use filters to explore segment-level behavior</span></div>
 </div>
 </section>
@@ -167,6 +168,34 @@ vals.forEach((v,i)=>{out+='<circle class="series-dot" cx="'+X(i)+'" cy="'+Y(v)+'
 $('churn-chart').innerHTML=out;
 $('churn-legend').innerHTML=selected.map(d=>'<span class="legend"><i style="background:'+d.color+'"></i>'+d.id+'</span>').join('')+'<span class="legend-all">synthetic rates</span>';
 }
+function cohortChurn(monthIndex, selected){
+if(selected.length===1)return selected[0].churn[monthIndex];
+const active=selected.reduce((s,d)=>s+d.active[monthIndex],0);
+return selected.reduce((s,d)=>s+d.churn[monthIndex]*d.active[monthIndex],0)/active;
+}
+function drawCohorts(){
+const selected=group();
+const count=Number(range.value);
+const offset=12-count;
+let html='<table class="cohort"><thead><tr><th>Signup cohort</th>';
+for(let m=0;m<6;m++)html+='<th>M'+m+'</th>';
+html+='</tr></thead><tbody>';
+for(let row=0;row<6;row++){
+const start=offset+row;
+html+='<tr><td>'+months[start]+' cohort</td>';
+for(let tenure=0;tenure<6;tenure++){
+if(start+tenure>=12){html+='<td>—</td>';continue}
+let retained=1;
+for(let step=0;step<tenure;step++)retained*=1-cohortChurn(start+step,selected)/100;
+const pct=Math.round(retained*100);
+const alpha=(.12+retained*.56).toFixed(2);
+html+='<td><span class="heat" style="background:rgba(198,244,122,'+alpha+')">'+pct+'%</span></td>';
+}
+html+='</tr>';
+}
+html+='</tbody></table>';
+$('cohort-grid').innerHTML=html;
+}
 function update(){
 const selected=group();
 const current=selected.reduce((s,d)=>s+d.active[11],0);
@@ -186,9 +215,10 @@ return '<div class="bar-row"><span class="bar-name">'+d.id+'</span><div class="b
 const top=selected.slice().sort((a,b)=>(b.active[11]*b.risk*b.price)-(a.active[11]*a.risk*a.price))[0];
 $('exposure-note').innerHTML='Largest illustrative exposure: <strong>'+top.id+'</strong>. MRR at risk is a prioritization estimate, not a forecast of realized churn.';
 drawLine();
+drawCohorts();
 }
 segment.addEventListener('change',update);
-range.addEventListener('change',drawLine);
+range.addEventListener('change',function(){drawLine();drawCohorts()});
 update();
 })();
 </script>
